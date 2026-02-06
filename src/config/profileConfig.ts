@@ -11,7 +11,7 @@ export const profileConfig: ProfileConfig = {
 	bio: "失败总是贯穿人生始终.",
 
 	// 链接配置
-	// 已经预装的图标集：fa6-brands，fa6-regular，fa6-solid，material-symbols，simple-icons
+	// 已经预装的图标集：fa7-brands，fa7-regular，fa7-solid，material-symbols，simple-icons
 	// 访问https://icones.js.org/ 获取图标代码，
 	// 如果想使用尚未包含相应的图标集，则需要安装它
 	// `pnpm add @iconify-json/<icon-set-name>`
@@ -26,18 +26,18 @@ export const profileConfig: ProfileConfig = {
 		{
 			name: "GitHub",
 			icon: "fa6-brands:github",
-			url: "https://github.com/shuaiguoer",
+			url: "https://github.com/CuteLeaf",
 			showName: false,
 		},
 		{
 			name: "Email",
 			icon: "fa6-solid:envelope",
-			url: "ls12345666@qq.com",
+			url: "mailto:xiaye@msn.com",
 			showName: false,
 		},
 		{
 			name: "RSS",
-			icon: "fa6-solid:rss",
+			icon: "fa7-solid:rss",
 			url: "/rss/",
 			showName: false,
 		},
