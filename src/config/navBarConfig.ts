@@ -30,13 +30,13 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 	// 			name: "GitHub",
 	// 			url: "https://github.com/CuteLeaf/shuaiguoer",
 	// 			external: true,
-	// 			icon: "fa6-brands:github",
+	// 			icon: "fa7-brands:github",
 	// 		},
 	// 		{
 	// 			name: "Bilibili",
 	// 			url: "https://space.bilibili.com/118791472",
 	// 			external: true,
-	// 			icon: "fa6-brands:bilibili",
+	// 			icon: "fa7-brands:bilibili",
 	// 		},
 	// 	],
 	// });
