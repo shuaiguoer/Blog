@@ -280,9 +280,8 @@ func main() {
     }
 
     for _, t := range tasks {
-        tt := t // 闭包陷阱：必须进行变量拷贝
         g.Go(func() error {
-            res, err := SearchData(ctx, tt.n, tt.d, tt.f)
+            res, err := SearchData(ctx, t.n, t.d, t.f)
             if err == nil {
                 select {
                 case resultChan <- res:
@@ -312,10 +311,9 @@ func main() {
 
 **关键点说明：**
 
-1. **闭包陷阱处理**：`tt := t` 必须进行变量拷贝，避免所有 goroutine 使用同一个变量。这是 Go 新手最容易踩的坑之一。
-2. **Channel 缓冲**：`resultChan` 缓冲为 1，防止发送者阻塞。如果缓冲为 0，当没有接收者时，发送者会永远阻塞。
-3. **优雅退出**：通过 `ctx.Done()` 监听取消信号，确保 goroutine 能够及时退出，避免资源泄漏。
-4. **错误传播**：`g.Wait()` 返回第一个非空 error，这是 errgroup 的核心特性。
+1. **Channel 缓冲**：`resultChan` 缓冲为 1，防止发送者阻塞。如果缓冲为 0，当没有接收者时，发送者会永远阻塞。
+2. **优雅退出**：通过 `ctx.Done()` 监听取消信号，确保 goroutine 能够及时退出，避免资源泄漏。
+3. **错误传播**：`g.Wait()` 返回第一个非空 error，这是 errgroup 的核心特性。
 
 **执行流程：**
 
@@ -353,26 +351,7 @@ func main() {
 
 ### 6.2 常见陷阱
 
-#### 陷阱 1：忘记变量拷贝
-
-```go
-// 错误示范
-for _, t := range tasks {
-    g.Go(func() error {
-        return process(t) // 所有 goroutine 都使用最后一个 t
-    })
-}
-
-// 正确示范
-for _, t := range tasks {
-    tt := t // 必须拷贝
-    g.Go(func() error {
-        return process(tt)
-    })
-}
-```
-
-#### 陷阱 2：Context 传递不一致
+#### 陷阱 1：Context 传递不一致
 
 ```go
 // 错误示范
@@ -388,7 +367,7 @@ g.Go(func() error {
 })
 ```
 
-#### 陷阱 3：Channel 阻塞
+#### 陷阱 2：Channel 阻塞
 
 ```go
 // 错误示范
@@ -406,7 +385,7 @@ g.Go(func() error {
 })
 ```
 
-#### 陷阱 4：资源泄漏
+#### 陷阱 3：资源泄漏
 
 ```go
 // 错误示范：没有检查 ctx.Done()
@@ -500,7 +479,6 @@ func ProcessBatch(ctx context.Context, items []Item) error {
     g.SetLimit(50) // 控制并发数
 
     for _, item := range items {
-        item := item // 闭包陷阱
         g.Go(func() error {
             return processItem(ctx, item)
         })
